@@ -2,14 +2,15 @@ import path from "path";
 import asyncfs from "fs/promises";
 import fs from "fs";
 import os from "os";
-import { Kind, Locator, PathInfo } from "./utils";
+import { Kind, Locator, PathInfo, convToRubyInterpreterInfo } from "./utils";
+import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
 export class AsdfLocator implements Locator {
     kind: Kind;
     constructor() {
         this.kind = Kind.Asdf;
     }
-    async execute(): Promise<PathInfo> {
+    async execute(): Promise<RubyInterpreterInfo[]> {
         const interpreterPaths: string[] = [];
         const rbenvDir = process.env.ASDF_DATA_DIR || path.join(os.homedir(), ".asdf");
         const installsDir = path.join(rbenvDir, "installs", "ruby");
@@ -24,10 +25,7 @@ export class AsdfLocator implements Locator {
                 }
             }
         }
-        return {
-            kind: this.kind,
-            interpreterPaths,
-        };
+        return convToRubyInterpreterInfo({ kind: this.kind, interpreterPaths });
     }
     private async findDir(dir: fs.PathLike) {
         const files = await asyncfs.readdir(dir, { withFileTypes: true });

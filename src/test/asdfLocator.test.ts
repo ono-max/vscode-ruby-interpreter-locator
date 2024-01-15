@@ -1,6 +1,7 @@
 import path from "path";
 import { Kind, PathInfo } from "../locator/utils";
 import { AsdfLocator } from "../locator/asdfLocator";
+import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
 let rbenvRoot: string | undefined;
 
@@ -19,12 +20,15 @@ afterAll(() => {
 test("asdf", async () => {
     const asdfLocator = new AsdfLocator();
     const pathInfos = await asdfLocator.execute();
-    const expected: PathInfo = {
-        kind: Kind.Asdf,
-        interpreterPaths: [
-            path.join(testData, "installs", "ruby", "3.1.1", "bin", "ruby"),
-            path.join(testData, "installs", "ruby", "3.2.2", "bin", "ruby"),
-        ],
-    };
+    const expected: RubyInterpreterInfo[] = [
+        {
+            isAsdf: true,
+            path: path.join(testData, "installs", "ruby", "3.1.1", "bin", "ruby"),
+        },
+        {
+            isAsdf: true,
+            path: path.join(testData, "installs", "ruby", "3.2.2", "bin", "ruby"),
+        },
+    ];
     expect(pathInfos).toEqual(expected);
 });

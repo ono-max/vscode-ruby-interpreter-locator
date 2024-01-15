@@ -1,12 +1,13 @@
 import path from "path";
-import { Kind, Locator, PathInfo, findRubyBinaries, getRbenvDir } from "./utils";
+import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, findRubyBinaries, getRbenvDir } from "./utils";
+import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
 export class EnvVariablesLocator implements Locator {
     kind: Kind;
     constructor() {
         this.kind = Kind.EnvVar;
     }
-    async execute(): Promise<PathInfo> {
+    async execute(): Promise<RubyInterpreterInfo[]> {
         const interpreterPaths: string[] = [];
         const pathEnvVars = this.getPathEnvVars();
         for (const env of pathEnvVars) {
@@ -28,10 +29,7 @@ export class EnvVariablesLocator implements Locator {
                 }
             }
         }
-        return {
-            kind: this.kind,
-            interpreterPaths,
-        };
+        return convToRubyInterpreterInfo({ kind: this.kind, interpreterPaths });
     }
 
     getPathEnvVars(): string[] {

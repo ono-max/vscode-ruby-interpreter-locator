@@ -1,7 +1,8 @@
 import path from "path";
 import asyncfs from "fs/promises";
 import fs from "fs";
-import { Kind, Locator, PathInfo } from "./utils";
+import { Kind, Locator, PathInfo, convToRubyInterpreterInfo } from "./utils";
+import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
 const rubyRegexp = /^ruby(@\d)?(\.\d)?(\.\d)?$/;
 
@@ -10,7 +11,7 @@ export class HomebrewLocator implements Locator {
     constructor() {
         this.kind = Kind.Homebrew;
     }
-    async execute(): Promise<PathInfo> {
+    async execute(): Promise<RubyInterpreterInfo[]> {
         const pathInfoMap = new Set<string>();
         let homebrewDir = process.env.HOMEBREW_PREFIX;
         if (homebrewDir === undefined) {
@@ -39,10 +40,7 @@ export class HomebrewLocator implements Locator {
                 }
             }
         }
-        return {
-            kind: this.kind,
-            interpreterPaths: Array.from(pathInfoMap),
-        };
+        return convToRubyInterpreterInfo({ kind: this.kind, interpreterPaths: Array.from(pathInfoMap) });
     }
     private async findDir(dir: fs.PathLike) {
         const files = await asyncfs.readdir(dir, { withFileTypes: true });

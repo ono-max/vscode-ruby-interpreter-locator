@@ -1,6 +1,7 @@
 import path from "path";
 import { RbenvLocator } from "../locator/rbenvLocator";
 import { Kind, PathInfo } from "../locator/utils";
+import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
 let rbenvRoot: string | undefined;
 
@@ -19,12 +20,15 @@ afterAll(() => {
 test("rbenv", async () => {
     const rbenvLocator = new RbenvLocator();
     const pathInfos = await rbenvLocator.execute();
-    const expected: PathInfo = {
-        kind: Kind.Rbenv,
-        interpreterPaths: [
-            path.join(testData, "versions", "2.7.1", "bin", "ruby"),
-            path.join(testData, "versions", "3.1.4", "bin", "ruby"),
-        ],
-    };
+    const expected: RubyInterpreterInfo[] = [
+        {
+            isRbenv: true,
+            path: path.join(testData, "versions", "2.7.1", "bin", "ruby"),
+        },
+        {
+            isRbenv: true,
+            path: path.join(testData, "versions", "3.1.4", "bin", "ruby"),
+        },
+    ];
     expect(pathInfos).toEqual(expected);
 });

@@ -1,14 +1,15 @@
 import path from "path";
 import asyncfs from "fs/promises";
 import fs from "fs";
-import { Kind, Locator, PathInfo, getRbenvDir } from "./utils";
+import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, getRbenvDir } from "./utils";
+import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
 export class RbenvLocator implements Locator {
     kind: Kind;
     constructor() {
         this.kind = Kind.Rbenv;
     }
-    async execute(): Promise<PathInfo> {
+    async execute(): Promise<RubyInterpreterInfo[]> {
         const interpreterPaths: string[] = [];
         // https://github.com/rbenv/rbenv#environment-variables
         const rbenvDir = getRbenvDir();
@@ -24,10 +25,7 @@ export class RbenvLocator implements Locator {
                 }
             }
         }
-        return {
-            kind: this.kind,
-            interpreterPaths,
-        };
+        return convToRubyInterpreterInfo({ kind: this.kind, interpreterPaths });
     }
     private async findDir(dir: fs.PathLike) {
         const files = await asyncfs.readdir(dir, { withFileTypes: true });

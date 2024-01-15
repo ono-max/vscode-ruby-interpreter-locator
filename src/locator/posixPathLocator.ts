@@ -1,4 +1,5 @@
-import { Kind, Locator, PathInfo, findRubyBinaries } from "./utils";
+import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, findRubyBinaries } from "./utils";
 
 // The following paths are borrowed from microsoft/vscode-python.
 // https://github.com/microsoft/vscode-python/blob/v2023.20.0/src/client/pythonEnvironments/common/posixUtils.ts#L40-L68
@@ -33,7 +34,7 @@ export class PosixPathLocator implements Locator {
     constructor() {
         this.kind = Kind.Posix;
     }
-    async execute(): Promise<PathInfo> {
+    async execute(): Promise<RubyInterpreterInfo[]> {
         const interpreterPaths: string[] = [];
         for (const dir of knownDirectories) {
             const binFiles = await findRubyBinaries(dir);
@@ -41,9 +42,6 @@ export class PosixPathLocator implements Locator {
                 interpreterPaths.push(bin);
             }
         }
-        return {
-            kind: this.kind,
-            interpreterPaths,
-        };
+        return convToRubyInterpreterInfo({ kind: this.kind, interpreterPaths });
     }
 }

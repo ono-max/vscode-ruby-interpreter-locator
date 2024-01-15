@@ -1,24 +1,17 @@
+import { RubyInterpreterInfo } from "./rubyInterpreterInfo";
 import { AsdfLocator } from "./locator/asdfLocator";
 import { EnvVariablesLocator } from "./locator/envVariablesLocator";
 import { HomebrewLocator } from "./locator/homebrewLocator";
 import { PosixPathLocator } from "./locator/posixPathLocator";
 import { RbenvLocator } from "./locator/rbenvLocator";
-import { PathInfo } from "./locator/utils";
+import { PathsReducer } from "./PathsReducer";
 
 export interface RubyInterpreterOptions {}
 
-export interface RubyInterpreterInfo {
-    directory: string;
-    version?: string;
-    // alphabetical order
-    isAsdf?: boolean;
-    isPathEnvVar?: boolean;
-    isRbenv?: boolean;
-    isHomebrew?: boolean;
-}
+export { RubyInterpreterInfo };
 
 export async function getInterpreters(options: RubyInterpreterOptions): Promise<RubyInterpreterInfo[]> {
-    const promisePathInfos = [
+    const locators: Promise<RubyInterpreterInfo[]>[] = [
         // alphabetical order
         new AsdfLocator().execute(),
         new EnvVariablesLocator().execute(),
@@ -26,24 +19,8 @@ export async function getInterpreters(options: RubyInterpreterOptions): Promise<
         new RbenvLocator().execute(),
     ];
     if (process.platform !== "win32") {
-        promisePathInfos.push(new PosixPathLocator().execute());
+        locators.push(new PosixPathLocator().execute());
     }
-    return [];
-}
-
-// TODO:
-class PathsReducer {
-    private promisePathInfos: Promise<PathInfo[]>;
-    constructor(promisePathInfos: Promise<PathInfo[]>) {
-        this.promisePathInfos = promisePathInfos;
-    }
-    public async execute() {
-        const pathInfos = await this.promisePathInfos;
-        const pathInfoMap = new Map<string, PathInfo>();
-        for (const pathInfo of pathInfos) {
-            for (const path of pathInfo.interpreterPaths) {
-                pathInfoMap.set(path, pathInfo);
-            }
-        }
-    }
+    const reducer = new PathsReducer(locators).execute();
+    return reducer;
 }
