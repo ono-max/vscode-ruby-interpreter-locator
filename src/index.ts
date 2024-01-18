@@ -10,7 +10,7 @@ export interface RubyInterpreterOptions {}
 
 export { RubyInterpreterInfo };
 
-export async function getInterpreters(options: RubyInterpreterOptions): Promise<RubyInterpreterInfo[]> {
+export async function getInterpreters(options?: RubyInterpreterOptions): Promise<RubyInterpreterInfo[]> {
     const locators: Promise<RubyInterpreterInfo[]>[] = [
         // alphabetical order
         new AsdfLocator().execute(),
