@@ -6,7 +6,7 @@ await getInterpreters();
 ```
 
 # TODO
-* Support chruby
+* Write a test for chrubyLocator
 * Support version
 * Create API
 * Support RVM
