@@ -1,7 +1,7 @@
 import path from "path";
 import asyncfs from "fs/promises";
 import fs from "fs";
-import { Kind, Locator, PathInfo, convToRubyInterpreterInfo } from "./utils";
+import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, findFiles } from "./utils";
 import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
 const rubyRegexp = /^ruby(@\d)?(\.\d)?(\.\d)?$/;
@@ -32,7 +32,7 @@ export class HomebrewLocator implements Locator {
             const availableVersionDirs = await this.findDir(optDir);
             for (const availableVersionDir of availableVersionDirs) {
                 const binDir = path.join(availableVersionDir, "bin");
-                const binFiles = await this.findFiles(binDir);
+                const binFiles = await findFiles(binDir);
                 for (const bin of binFiles) {
                     if (path.basename(bin) === "ruby") {
                         pathInfoMap.add(bin);
@@ -56,9 +56,5 @@ export class HomebrewLocator implements Locator {
             .map((file) => path.join(dir.toString(), file.name));
         const realDirs = await Promise.all(symlinks.map((link) => asyncfs.readlink(link)));
         return realDirs;
-    }
-    private async findFiles(dir: fs.PathLike) {
-        const files = await asyncfs.readdir(dir, { withFileTypes: true });
-        return files.filter((file) => file.isFile()).map((file) => path.join(dir.toString(), file.name));
     }
 }

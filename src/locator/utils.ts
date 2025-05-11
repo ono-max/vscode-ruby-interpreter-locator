@@ -39,13 +39,27 @@ export async function findRubyBinaries(dir: fs.PathLike) {
         .map((file) => path.join(dir.toString(), file.name));
 }
 
+export async function findDir(dir: fs.PathLike) {
+    const files = await asyncfs.readdir(dir, { withFileTypes: true });
+    return files.map((file) => path.join(dir.toString(), file.name));
+}
+
+export async function findFiles(dir: fs.PathLike) {
+    const files = await asyncfs.readdir(dir, { withFileTypes: true });
+    return files.filter((file) => file.isFile()).map((file) => path.join(dir.toString(), file.name));
+}
+
 export async function convToRubyInterpreterInfo(pathInfo: PathInfo): Promise<RubyInterpreterInfo[]> {
     const interpreterInfo: RubyInterpreterInfo = {
         path: "",
     };
     switch (pathInfo.kind) {
+        // alphabetical order
         case Kind.Asdf:
             interpreterInfo.isAsdf = true;
+            break;
+        case Kind.Chruby:
+            interpreterInfo.isChruby = true;
             break;
         case Kind.EnvVar:
             interpreterInfo.isPathEnvVar = true;

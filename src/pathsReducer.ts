@@ -16,8 +16,11 @@ export class PathsReducer {
                     interpreterInfoMap.set(path.normalize(currentInfo.path), currentInfo);
                 } else {
                     switch (true) {
+                        // alphabetical order
                         case currentInfo.isAsdf:
                             existingInfo.isAsdf = true;
+                        case currentInfo.isChruby:
+                            existingInfo.isChruby = true;
                         case currentInfo.isHomebrew:
                             existingInfo.isHomebrew = true;
                         case currentInfo.isPathEnvVar:

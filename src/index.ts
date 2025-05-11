@@ -5,6 +5,7 @@ import { HomebrewLocator } from "./locator/homebrewLocator";
 import { PosixPathLocator } from "./locator/posixPathLocator";
 import { RbenvLocator } from "./locator/rbenvLocator";
 import { PathsReducer } from "./pathsReducer";
+import { ChrubyLocator } from "./locator/chrubyLocator";
 
 export interface RubyInterpreterOptions {}
 
@@ -14,6 +15,7 @@ export async function getInterpreters(options?: RubyInterpreterOptions): Promise
     const locators: Promise<RubyInterpreterInfo[]>[] = [
         // alphabetical order
         new AsdfLocator().execute(),
+        new ChrubyLocator().execute(),
         new EnvVariablesLocator().execute(),
         new HomebrewLocator().execute(),
         new RbenvLocator().execute(),

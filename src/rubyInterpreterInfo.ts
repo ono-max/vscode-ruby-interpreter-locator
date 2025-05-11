@@ -3,6 +3,7 @@ export interface RubyInterpreterInfo {
     version?: string;
     // alphabetical order
     isAsdf?: boolean;
+    isChruby?: boolean;
     isPathEnvVar?: boolean;
     isRbenv?: boolean;
     isHomebrew?: boolean;

@@ -2,7 +2,7 @@ import path from "path";
 import asyncfs from "fs/promises";
 import fs from "fs";
 import os from "os";
-import { Kind, Locator, PathInfo, convToRubyInterpreterInfo } from "./utils";
+import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, findDir, findFiles } from "./utils";
 import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
 export class AsdfLocator implements Locator {
@@ -15,10 +15,10 @@ export class AsdfLocator implements Locator {
         const asdfDir = process.env.ASDF_DATA_DIR || path.join(os.homedir(), ".asdf");
         const installsDir = path.join(asdfDir, "installs", "ruby");
         // The sub directory should be something like '3.1.4', '2.7.1'.
-        const availableVersionDirs = await this.findDir(installsDir);
+        const availableVersionDirs = await findDir(installsDir);
         for (const availableVersionDir of availableVersionDirs) {
             const binDir = path.join(availableVersionDir, "bin");
-            const binFiles = await this.findFiles(binDir);
+            const binFiles = await findFiles(binDir);
             for (const bin of binFiles) {
                 if (path.basename(bin) === "ruby") {
                     interpreterPaths.push(bin);
@@ -26,13 +26,5 @@ export class AsdfLocator implements Locator {
             }
         }
         return convToRubyInterpreterInfo({ kind: this.kind, interpreterPaths });
-    }
-    private async findDir(dir: fs.PathLike) {
-        const files = await asyncfs.readdir(dir, { withFileTypes: true });
-        return files.map((file) => path.join(dir.toString(), file.name));
-    }
-    private async findFiles(dir: fs.PathLike) {
-        const files = await asyncfs.readdir(dir, { withFileTypes: true });
-        return files.filter((file) => file.isFile()).map((file) => path.join(dir.toString(), file.name));
     }
 }
