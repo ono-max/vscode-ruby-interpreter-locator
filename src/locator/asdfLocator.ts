@@ -12,8 +12,8 @@ export class AsdfLocator implements Locator {
     }
     async execute(): Promise<RubyInterpreterInfo[]> {
         const interpreterPaths: string[] = [];
-        const rbenvDir = process.env.ASDF_DATA_DIR || path.join(os.homedir(), ".asdf");
-        const installsDir = path.join(rbenvDir, "installs", "ruby");
+        const asdfDir = process.env.ASDF_DATA_DIR || path.join(os.homedir(), ".asdf");
+        const installsDir = path.join(asdfDir, "installs", "ruby");
         // The sub directory should be something like '3.1.4', '2.7.1'.
         const availableVersionDirs = await this.findDir(installsDir);
         for (const availableVersionDir of availableVersionDirs) {
