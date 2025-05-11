@@ -4,7 +4,7 @@ import { EnvVariablesLocator } from "./locator/envVariablesLocator";
 import { HomebrewLocator } from "./locator/homebrewLocator";
 import { PosixPathLocator } from "./locator/posixPathLocator";
 import { RbenvLocator } from "./locator/rbenvLocator";
-import { PathsReducer } from "./PathsReducer";
+import { PathsReducer } from "./pathsReducer";
 
 export interface RubyInterpreterOptions {}
 

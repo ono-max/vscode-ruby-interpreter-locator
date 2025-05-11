@@ -7,6 +7,7 @@ import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 export const Kind = {
     // alphabetical order
     Asdf: "Asdf",
+    Chruby: "Chruby",
     EnvVar: "EnvVar",
     Posix: "Posix",
     Rbenv: "Rbenv",
