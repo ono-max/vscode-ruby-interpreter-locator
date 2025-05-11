@@ -1,6 +1,4 @@
 import path from "path";
-import asyncfs from "fs/promises";
-import fs from "fs";
 import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, findDir, findFiles, getRbenvDir } from "./utils";
 import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
