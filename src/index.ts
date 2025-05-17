@@ -6,6 +6,7 @@ import { PosixPathLocator } from "./locator/posixPathLocator";
 import { RbenvLocator } from "./locator/rbenvLocator";
 import { PathsReducer } from "./pathsReducer";
 import { ChrubyLocator } from "./locator/chrubyLocator";
+import { RubyEnvScriptRunner } from "./rubyEnvScriptRunner";
 
 export interface RubyInterpreterOptions {}
 
@@ -24,5 +25,6 @@ export async function getInterpreters(options?: RubyInterpreterOptions): Promise
         locators.push(new PosixPathLocator().execute());
     }
     const reducer = new PathsReducer(locators).execute();
-    return reducer;
+    const runner = new RubyEnvScriptRunner(reducer).execute();
+    return runner;
 }

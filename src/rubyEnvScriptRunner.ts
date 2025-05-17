@@ -1,0 +1,35 @@
+import { RubyInterpreterInfo } from "./rubyInterpreterInfo";
+import { promisify } from "util";
+import * as child_process from "child_process";
+
+const asyncExec = promisify(child_process.exec);
+
+type RubyEnvJson = {
+    version: string;
+    gemHome: string[];
+};
+
+export class RubyEnvScriptRunner {
+    private rubyInterpreterInfoPromises: Promise<RubyInterpreterInfo[]>;
+    constructor(rubyInterpreterInfoPromises: Promise<RubyInterpreterInfo[]>) {
+        this.rubyInterpreterInfoPromises = rubyInterpreterInfoPromises;
+    }
+
+    public async execute(): Promise<RubyInterpreterInfo[]> {
+        const rubyInterpreterInfos = await this.rubyInterpreterInfoPromises;
+        return Promise.all(
+            rubyInterpreterInfos.map(async (currentInfo) => {
+                const result = await asyncExec(`${currentInfo.path} ${__dirname}/ruby_env_info.rb`);
+                try {
+                    const json: RubyEnvJson = JSON.parse(result.stdout);
+                    currentInfo.version = json.version;
+                    currentInfo.gemHome = json.gemHome;
+                } catch (e) {
+                    console.error("Error parsing JSON:", e);
+                } finally {
+                    return currentInfo;
+                }
+            }),
+        );
+    }
+}
