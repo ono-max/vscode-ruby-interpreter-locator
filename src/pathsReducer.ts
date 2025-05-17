@@ -19,14 +19,19 @@ export class PathsReducer {
                         // alphabetical order
                         case currentInfo.isAsdf:
                             existingInfo.isAsdf = true;
+                            break;
                         case currentInfo.isChruby:
                             existingInfo.isChruby = true;
+                            break;
                         case currentInfo.isHomebrew:
                             existingInfo.isHomebrew = true;
+                            break;
                         case currentInfo.isPathEnvVar:
                             existingInfo.isPathEnvVar = true;
+                            break;
                         case currentInfo.isRbenv:
                             existingInfo.isRbenv = true;
+                            break;
                     }
                     interpreterInfoMap.set(existingInfo.path, existingInfo);
                 }
