@@ -5,8 +5,7 @@ import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
 let rbenvRoot: string | undefined;
 
-const projectRoot = path.join(__dirname, "..", "..");
-const testData = path.join(projectRoot, "src", "test", "dummyDirectories", "homebrewtest", "homebrew");
+const testData = path.join("src", "test", "dummyDirectories", "homebrewtest", "homebrew");
 
 beforeAll(() => {
     rbenvRoot = process.env.HOMEBREW_PREFIX;
