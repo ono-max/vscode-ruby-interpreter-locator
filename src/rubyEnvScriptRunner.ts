@@ -2,7 +2,8 @@ import { RubyInterpreterInfo } from "./rubyInterpreterInfo";
 import { promisify } from "util";
 import * as child_process from "child_process";
 
-const asyncExec = promisify(child_process.exec);
+// This function is exported for testing purposes.
+export const asyncExec = promisify(child_process.exec);
 
 type RubyEnvJson = {
     version: string;
@@ -19,7 +20,7 @@ export class RubyEnvScriptRunner {
         const rubyInterpreterInfos = await this.rubyInterpreterInfoPromises;
         return Promise.all(
             rubyInterpreterInfos.map(async (currentInfo) => {
-                const result = await asyncExec(`${currentInfo.path} ${__dirname}/ruby_env_info.rb`);
+                const result = await asyncExec(`${currentInfo.path} ${__dirname}/ruby_env.rb`);
                 try {
                     const json: RubyEnvJson = JSON.parse(result.stdout);
                     currentInfo.version = json.version;

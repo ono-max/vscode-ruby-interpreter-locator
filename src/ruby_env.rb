@@ -1,8 +1,8 @@
 require "json"
 
 env = {
-  ruby_version: RUBY_VERSION,
-  gem_home: Gem.path
+  version: RUBY_VERSION,
+  gemHome: Gem.path
 }
 
 puts JSON.generate(env)
