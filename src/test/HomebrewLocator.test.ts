@@ -21,6 +21,11 @@ test("homebrew", async () => {
     const pathInfos = await homebrewLocator.execute();
     const expected: RubyInterpreterInfo[] = [
         {
+            isAsdf: false,
+            isChruby: false,
+            isPathEnvVar: false,
+            isRbenv: false,
+            isRvm: false,
             isHomebrew: true,
             path: path.join(testData, "Cellar", "ruby", "3.2.2_1", "bin", "ruby"),
         },

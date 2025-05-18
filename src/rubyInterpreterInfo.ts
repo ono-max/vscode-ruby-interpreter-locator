@@ -3,10 +3,10 @@ export interface RubyInterpreterInfo {
     version?: string;
     gemHome?: string[];
     // alphabetical order
-    isAsdf?: boolean;
-    isChruby?: boolean;
-    isPathEnvVar?: boolean;
-    isRbenv?: boolean;
-    isRvm?: boolean;
-    isHomebrew?: boolean;
+    isAsdf: boolean;
+    isChruby: boolean;
+    isPathEnvVar: boolean;
+    isRbenv: boolean;
+    isRvm: boolean;
+    isHomebrew: boolean;
 }

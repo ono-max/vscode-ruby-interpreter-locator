@@ -67,6 +67,12 @@ async function safeReadDir(
 export async function convToRubyInterpreterInfo(pathInfo: PathInfo): Promise<RubyInterpreterInfo[]> {
     const interpreterInfo: RubyInterpreterInfo = {
         path: "",
+        isAsdf: false,
+        isChruby: false,
+        isPathEnvVar: false,
+        isRbenv: false,
+        isRvm: false,
+        isHomebrew: false,
     };
     switch (pathInfo.kind) {
         // alphabetical order

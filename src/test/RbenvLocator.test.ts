@@ -22,11 +22,21 @@ test("rbenv", async () => {
     const pathInfos = await rbenvLocator.execute();
     const expected: RubyInterpreterInfo[] = [
         {
+            isAsdf: false,
+            isChruby: false,
+            isPathEnvVar: false,
             isRbenv: true,
+            isRvm: false,
+            isHomebrew: false,
             path: path.join(testData, "versions", "2.7.1", "bin", "ruby"),
         },
         {
+            isAsdf: false,
+            isChruby: false,
+            isPathEnvVar: false,
             isRbenv: true,
+            isRvm: false,
+            isHomebrew: false,
             path: path.join(testData, "versions", "3.1.4", "bin", "ruby"),
         },
     ];

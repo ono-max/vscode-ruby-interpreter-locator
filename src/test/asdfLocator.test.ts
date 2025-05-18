@@ -23,10 +23,20 @@ test("asdf", async () => {
     const expected: RubyInterpreterInfo[] = [
         {
             isAsdf: true,
+            isChruby: false,
+            isPathEnvVar: false,
+            isRbenv: false,
+            isRvm: false,
+            isHomebrew: false,
             path: path.join(testData, "installs", "ruby", "3.1.1", "bin", "ruby"),
         },
         {
             isAsdf: true,
+            isChruby: false,
+            isPathEnvVar: false,
+            isRbenv: false,
+            isRvm: false,
+            isHomebrew: false,
             path: path.join(testData, "installs", "ruby", "3.2.2", "bin", "ruby"),
         },
     ];
