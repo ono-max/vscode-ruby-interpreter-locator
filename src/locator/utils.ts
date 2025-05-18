@@ -1,6 +1,6 @@
 import path from "path";
 import os from "os";
-import fs from "fs";
+import fs, { ObjectEncodingOptions, PathLike } from "fs";
 import asyncfs from "fs/promises";
 import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
@@ -34,20 +34,34 @@ export function getRbenvDir() {
 const rubyRegexp = /^ruby(\d)?(\.\d)?(\.\d)?$/;
 
 export async function findRubyBinaries(dir: fs.PathLike) {
-    const files = await asyncfs.readdir(dir, { withFileTypes: true });
+    const files = await safeReadDir(dir, { withFileTypes: true });
     return files
         .filter((file) => file.isFile() && rubyRegexp.test(file.name))
         .map((file) => path.join(dir.toString(), file.name));
 }
 
 export async function findDir(dir: fs.PathLike) {
-    const files = await asyncfs.readdir(dir, { withFileTypes: true });
+    const files = await safeReadDir(dir, { withFileTypes: true });
     return files.map((file) => path.join(dir.toString(), file.name));
 }
 
 export async function findFiles(dir: fs.PathLike) {
-    const files = await asyncfs.readdir(dir, { withFileTypes: true });
+    const files = await safeReadDir(dir, { withFileTypes: true });
     return files.filter((file) => file.isFile()).map((file) => path.join(dir.toString(), file.name));
+}
+
+async function safeReadDir(
+    dir: PathLike,
+    options: ObjectEncodingOptions & {
+        withFileTypes: true;
+        recursive?: boolean | undefined;
+    },
+) {
+    try {
+        return await asyncfs.readdir(dir, options);
+    } catch (e) {
+        return [];
+    }
 }
 
 export async function convToRubyInterpreterInfo(pathInfo: PathInfo): Promise<RubyInterpreterInfo[]> {
