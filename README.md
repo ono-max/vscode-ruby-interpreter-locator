@@ -6,6 +6,7 @@ A Node.js library for discovering available Ruby interpreters on your system. Th
 * chruby
 * Homebrew
 * rbenv
+* rvm
 
 # Usage
 
