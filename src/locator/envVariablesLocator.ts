@@ -43,6 +43,6 @@ export class EnvVariablesLocator implements Locator {
 
     isShimsDir(targetPath: string): boolean {
         const rbenvDir = getRbenvDir();
-        return targetPath === rbenvDir;
+        return targetPath === path.join(rbenvDir, "shims");
     }
 }
