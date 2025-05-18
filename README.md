@@ -23,8 +23,8 @@ I would like to thank the following projects, which served as references during 
 
 # TODO
 * Write a test for chrubyLocator
-* Support version
 * Create API
-* Support RVM
+* Write a test for rvmLocator
 * Write a test for envVariablesLocator
 * Write a test for PathsReducer
+* Add interpreter info sorting logic
