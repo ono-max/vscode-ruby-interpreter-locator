@@ -7,5 +7,6 @@ export interface RubyInterpreterInfo {
     isChruby?: boolean;
     isPathEnvVar?: boolean;
     isRbenv?: boolean;
+    isRvm?: boolean;
     isHomebrew?: boolean;
 }

@@ -11,6 +11,7 @@ export const Kind = {
     EnvVar: "EnvVar",
     Posix: "Posix",
     Rbenv: "Rbenv",
+    Rvm: "Rvm",
     Homebrew: "Homebrew",
 } as const;
 
@@ -69,6 +70,9 @@ export async function convToRubyInterpreterInfo(pathInfo: PathInfo): Promise<Rub
             break;
         case Kind.Rbenv:
             interpreterInfo.isRbenv = true;
+            break;
+        case Kind.Rvm:
+            interpreterInfo.isRvm = true;
             break;
     }
     return pathInfo.interpreterPaths.map((path) => {

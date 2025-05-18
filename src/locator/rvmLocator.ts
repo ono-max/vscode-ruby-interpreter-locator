@@ -2,19 +2,16 @@ import path from "path";
 import { Kind, Locator, convToRubyInterpreterInfo, findDir, findFiles, getRbenvDir } from "./utils";
 import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 
-export class ChrubyLocator implements Locator {
+export class RvmLocator implements Locator {
     kind: Kind;
     constructor() {
-        this.kind = Kind.Chruby;
+        this.kind = Kind.Rvm;
     }
     async execute(): Promise<RubyInterpreterInfo[]> {
-        // chruby uses either ruby-install or ruby-build to install Ruby versions.
-        // https://github.com/postmodern/chruby?tab=readme-ov-file#rubies
         const interpreterPaths: string[] = [];
-        // ruby-install installs into /opt/rubies/ for root and ~/.rubies/ for users by default.
-        // https://github.com/postmodern/ruby-install?tab=readme-ov-file#features
-        // TODO: Support ruby-build if needed.
-        const dirs = ["/opt/rubies", path.join(process.env.HOME || "", ".rubies")];
+        // ruby-install installs into /usr/local/rvm for root and ~/.rvm/ for users by default.
+        // https://rvm.io/rvm/install
+        const dirs = ["/usr/local/rvm", path.join(process.env.HOME || "", ".rvm")];
         for (const dir of dirs) {
             // The sub directory should be something like 'ruby-3.4.3', 'ruby-3.0.6'.
             const availableVersionDirs = await findDir(dir);

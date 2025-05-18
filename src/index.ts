@@ -7,6 +7,7 @@ import { RbenvLocator } from "./locator/rbenvLocator";
 import { PathsReducer } from "./pathsReducer";
 import { ChrubyLocator } from "./locator/chrubyLocator";
 import { RubyEnvScriptRunner } from "./rubyEnvScriptRunner";
+import { RvmLocator } from "./locator/rvmLocator";
 
 export interface RubyInterpreterOptions {}
 
@@ -20,6 +21,7 @@ export async function getInterpreters(options?: RubyInterpreterOptions): Promise
         new EnvVariablesLocator().execute(),
         new HomebrewLocator().execute(),
         new RbenvLocator().execute(),
+        new RvmLocator().execute(),
     ];
     if (process.platform !== "win32") {
         locators.push(new PosixPathLocator().execute());
