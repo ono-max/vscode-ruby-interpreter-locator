@@ -2,7 +2,7 @@ import { promisify } from "util";
 import { RubyInterpreterInfo } from "./rubyInterpreterInfo";
 import { exec } from "child_process";
 import { join } from "path";
-import asyncfs from "fs/promises";
+import { readFile } from "fs/promises";
 
 // This function is exported for testing purposes.
 export const asyncExec = promisify(exec);
@@ -51,13 +51,13 @@ export class RubyInterpreterSorter {
 
     private compareVersions(a: RubyInterpreterInfo, b: RubyInterpreterInfo): number {
         if (a.version !== undefined && b.version === undefined) {
-            return -1 // a is preferred
+            return -1; // a is preferred
         }
         if (a.version === undefined && b.version !== undefined) {
-            return 1 // b is preferred
+            return 1; // b is preferred
         }
         if (a.version === undefined && b.version === undefined) {
-            return 0 // equal
+            return 0; // equal
         }
         const aVersion = versionRegexp.exec(a.version!);
         const bVersion = versionRegexp.exec(b.version!);
@@ -97,7 +97,7 @@ export class RubyInterpreterSorter {
     private async readDotRubyVersion() {
         const rubyVersionFile = join(this.cwd, ".ruby-version");
         try {
-            const version = await asyncfs.readFile(rubyVersionFile, "utf8");
+            const version = await readFile(rubyVersionFile, "utf8");
             return version.trim();
         } catch (error) {
             return null;
