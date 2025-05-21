@@ -28,4 +28,6 @@ I would like to thank the following projects, which served as references during 
 * Write a test for rvmLocator
 * Write a test for envVariablesLocator
 * Write a test for PathsReducer
-* Add interpreter info sorting logic
+* Write a test for sorting logic
+* Come up with a solution to cache these interpreter information
+* Setup CI
