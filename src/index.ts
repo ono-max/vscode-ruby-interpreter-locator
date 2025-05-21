@@ -8,8 +8,11 @@ import { PathsReducer } from "./pathsReducer";
 import { ChrubyLocator } from "./locator/chrubyLocator";
 import { RubyEnvScriptRunner } from "./rubyEnvScriptRunner";
 import { RvmLocator } from "./locator/rvmLocator";
+import { RubyInterpreterSorter } from "./rubyInterpreterSorter";
 
-export interface RubyInterpreterOptions {}
+export interface RubyInterpreterOptions {
+    cwd?: string;
+}
 
 export { RubyInterpreterInfo };
 
@@ -28,5 +31,9 @@ export async function getInterpreters(options?: RubyInterpreterOptions): Promise
     }
     const reducer = new PathsReducer(locators).execute();
     const runner = new RubyEnvScriptRunner(reducer).execute();
+    if (options?.cwd) {
+        const sorter = new RubyInterpreterSorter(runner, options.cwd).execute();
+        return sorter;
+    }
     return runner;
 }

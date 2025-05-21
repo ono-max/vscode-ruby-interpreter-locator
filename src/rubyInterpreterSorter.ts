@@ -7,6 +7,8 @@ import asyncfs from "fs/promises";
 // This function is exported for testing purposes.
 export const asyncExec = promisify(exec);
 
+const versionRegexp = /^(\d+).(\d+).(\d+)$/;
+
 export class RubyInterpreterSorter {
     private rubyInterpreterInfoPromises: Promise<RubyInterpreterInfo[]>;
     private cwd: string;
@@ -21,12 +23,54 @@ export class RubyInterpreterSorter {
         return rubyInterpreterInfos.sort(this.compare.bind(this));
     }
 
-    private isVersionManager(info: RubyInterpreterInfo): boolean {
+    private getEnvPriority(info: RubyInterpreterInfo): number {
         // If the environment is managed by a version manager, we give it a higher priority.
-        if (info.isAsdf || info.isChruby || info.isRbenv || info.isRvm) {
-            return true;
+        // This priority is determined by the number of stars on GitHub at 2025-05-21.
+        if (info.isRbenv) {
+            return 1; // 16.4k
         }
-        return false;
+        if (info.isRvm) {
+            return 2; // 5.2k
+        }
+        if (info.isChruby) {
+            return 3; // 2.9k
+        }
+        if (info.isAsdf) {
+            return 4; // 695
+        }
+
+        // These are not version managers, so we give them a lower priority.
+        if (info.isHomebrew) {
+            return 5;
+        }
+        if (info.isPathEnvVar) {
+            return 6;
+        }
+        return 7;
+    }
+
+    private compareVersions(a: RubyInterpreterInfo, b: RubyInterpreterInfo): number {
+        if (a.version !== undefined && b.version === undefined) {
+            return -1 // a is preferred
+        }
+        if (a.version === undefined && b.version !== undefined) {
+            return 1 // b is preferred
+        }
+        if (a.version === undefined && b.version === undefined) {
+            return 0 // equal
+        }
+        const aVersion = versionRegexp.exec(a.version!);
+        const bVersion = versionRegexp.exec(b.version!);
+        if (aVersion && aVersion.length === 4 && bVersion && bVersion.length === 4) {
+            const aMajor = parseInt(aVersion[1], 10);
+            const aMinor = parseInt(aVersion[2], 10);
+            const aPatch = parseInt(aVersion[3], 10);
+            const bMajor = parseInt(bVersion[1], 10);
+            const bMinor = parseInt(bVersion[2], 10);
+            const bPatch = parseInt(bVersion[3], 10);
+            return Math.sign(aMajor - bMajor) || Math.sign(aMinor - bMinor) || Math.sign(aPatch - bPatch);
+        }
+        return 0; // equal
     }
 
     private compare(a: RubyInterpreterInfo, b: RubyInterpreterInfo): number {
@@ -38,13 +82,9 @@ export class RubyInterpreterSorter {
                 return 1; // b is preferred
             }
         }
-        if (this.isVersionManager(a) && !this.isVersionManager(b)) {
-            return -1; // a is preferred
-        }
-        if (!this.isVersionManager(a) && this.isVersionManager(b)) {
-            return 1; // b is preferred
-        }
-        return 0;
+        const aEnvPriority = this.getEnvPriority(a);
+        const bEnvPriority = this.getEnvPriority(b);
+        return Math.sign(aEnvPriority - bEnvPriority) || this.compareVersions(a, b);
     }
 
     private isDotRubyVersionCompatible(info: RubyInterpreterInfo): boolean {
