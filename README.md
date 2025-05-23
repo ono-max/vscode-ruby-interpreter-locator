@@ -23,9 +23,7 @@ I would like to thank the following projects, which served as references during 
 * [Eskibear/node-jdk-utils](https://github.com/Eskibear/node-jdk-utils)
 
 # TODO
-* Write a test for chrubyLocator
 * Create API
-* Write a test for rvmLocator
 * Write a test for envVariablesLocator
 * Write a test for PathsReducer
 * Write a test for sorting logic
