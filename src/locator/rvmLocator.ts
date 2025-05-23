@@ -13,8 +13,9 @@ export class RvmLocator implements Locator {
         // https://rvm.io/rvm/install
         const dirs = ["/usr/local/rvm", path.join(process.env.HOME || "", ".rvm")];
         for (const dir of dirs) {
+            // https://github.com/rvm/rvm/blob/1.29.12/scripts/initialize#L133
             // The sub directory should be something like 'ruby-3.4.3', 'ruby-3.0.6'.
-            const availableVersionDirs = await findDir(dir);
+            const availableVersionDirs = await findDir(path.join(dir, "rubies"));
             for (const availableVersionDir of availableVersionDirs) {
                 const binDir = path.join(availableVersionDir, "bin");
                 const binFiles = await findFiles(binDir);
