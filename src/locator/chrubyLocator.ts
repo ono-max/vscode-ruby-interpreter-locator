@@ -14,7 +14,7 @@ export class ChrubyLocator implements Locator {
         // ruby-install installs into /opt/rubies/ for root and ~/.rubies/ for users by default.
         // https://github.com/postmodern/ruby-install?tab=readme-ov-file#features
         // TODO: Support ruby-build if needed.
-        const dirs = ["/opt/rubies", path.join(process.env.HOME || "", ".rubies")];
+        const dirs = this.getRootDir();
         for (const dir of dirs) {
             // The sub directory should be something like 'ruby-3.4.3', 'ruby-3.0.6'.
             const availableVersionDirs = await findDir(dir);
@@ -30,5 +30,9 @@ export class ChrubyLocator implements Locator {
         }
 
         return convToRubyInterpreterInfo({ kind: this.kind, interpreterPaths });
+    }
+
+    getRootDir() {
+        return ["/opt/rubies", path.join(process.env.HOME || "", ".rubies")];
     }
 }
