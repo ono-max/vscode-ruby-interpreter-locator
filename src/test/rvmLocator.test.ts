@@ -1,6 +1,8 @@
 import path from "path";
 import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 import { RvmLocator } from "../locator/rvmLocator";
+import { get } from "http";
+import { getRubyInterpreterInfo } from "./utils";
 
 let homedir: string | undefined;
 
@@ -20,24 +22,8 @@ test("rvm", async () => {
     const locator = new RvmLocator();
     const pathInfos = await locator.execute();
     const expected: RubyInterpreterInfo[] = [
-        {
-            isAsdf: false,
-            isChruby: false,
-            isPathEnvVar: false,
-            isRbenv: false,
-            isRvm: true,
-            isHomebrew: false,
-            path: path.join(testData, ".rvm", "rubies", "ruby-3.3.8", "bin", "ruby"),
-        },
-        {
-            isAsdf: false,
-            isChruby: false,
-            isPathEnvVar: false,
-            isRbenv: false,
-            isRvm: true,
-            isHomebrew: false,
-            path: path.join(testData, ".rvm", "rubies", "ruby-3.4.3", "bin", "ruby"),
-        },
+        getRubyInterpreterInfo({isRvm: true, path: path.join(testData, ".rvm", "rubies", "ruby-3.3.8", "bin", "ruby")}),
+        getRubyInterpreterInfo({isRvm: true, path: path.join(testData, ".rvm", "rubies", "ruby-3.4.3", "bin", "ruby")}),
     ];
     expect(pathInfos).toEqual(expected);
 });

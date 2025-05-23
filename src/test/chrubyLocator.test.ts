@@ -2,6 +2,7 @@ import path from "path";
 import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
 import { RvmLocator } from "../locator/rvmLocator";
 import { ChrubyLocator } from "../locator/chrubyLocator";
+import { getRubyInterpreterInfo } from "./utils";
 
 let homedir: string | undefined;
 
@@ -24,24 +25,8 @@ test("chruby", async () => {
     const locator = new ChrubyLocator();
     const pathInfos = await locator.execute();
     const expected: RubyInterpreterInfo[] = [
-        {
-            isAsdf: false,
-            isChruby: true,
-            isPathEnvVar: false,
-            isRbenv: false,
-            isRvm: false,
-            isHomebrew: false,
-            path: path.join(testData, "ruby-3.3.8", "bin", "ruby"),
-        },
-        {
-            isAsdf: false,
-            isChruby: true,
-            isPathEnvVar: false,
-            isRbenv: false,
-            isRvm: false,
-            isHomebrew: false,
-            path: path.join(testData, "ruby-3.4.3", "bin", "ruby"),
-        },
+        getRubyInterpreterInfo({ isChruby: true, path: path.join(testData, "ruby-3.3.8", "bin", "ruby") }),
+        getRubyInterpreterInfo({ isChruby: true, path: path.join(testData, "ruby-3.4.3", "bin", "ruby") }),
     ];
 
     expect(pathInfos).toEqual(expected);

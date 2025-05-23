@@ -2,6 +2,7 @@ import path from "path";
 import { RbenvLocator } from "../locator/rbenvLocator";
 import { Kind, PathInfo } from "../locator/utils";
 import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { getRubyInterpreterInfo } from "./utils";
 
 let rbenvRoot: string | undefined;
 
@@ -21,24 +22,8 @@ test("rbenv", async () => {
     const rbenvLocator = new RbenvLocator();
     const pathInfos = await rbenvLocator.execute();
     const expected: RubyInterpreterInfo[] = [
-        {
-            isAsdf: false,
-            isChruby: false,
-            isPathEnvVar: false,
-            isRbenv: true,
-            isRvm: false,
-            isHomebrew: false,
-            path: path.join(testData, "versions", "2.7.1", "bin", "ruby"),
-        },
-        {
-            isAsdf: false,
-            isChruby: false,
-            isPathEnvVar: false,
-            isRbenv: true,
-            isRvm: false,
-            isHomebrew: false,
-            path: path.join(testData, "versions", "3.1.4", "bin", "ruby"),
-        },
+        getRubyInterpreterInfo({ isRbenv: true, path: path.join(testData, "versions", "2.7.1", "bin", "ruby") }),
+        getRubyInterpreterInfo({ isRbenv: true, path: path.join(testData, "versions", "3.1.4", "bin", "ruby") }),
     ];
     expect(pathInfos).toEqual(expected);
 });
