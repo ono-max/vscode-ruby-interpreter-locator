@@ -62,13 +62,13 @@ export class RubyInterpreterSorter {
         const aVersion = versionRegexp.exec(a.version!);
         const bVersion = versionRegexp.exec(b.version!);
         if (aVersion && aVersion.length === 4 && bVersion && bVersion.length === 4) {
-            const aMajor = parseInt(aVersion[1], 10);
-            const aMinor = parseInt(aVersion[2], 10);
-            const aPatch = parseInt(aVersion[3], 10);
-            const bMajor = parseInt(bVersion[1], 10);
-            const bMinor = parseInt(bVersion[2], 10);
-            const bPatch = parseInt(bVersion[3], 10);
-            return Math.sign(aMajor - bMajor) || Math.sign(aMinor - bMinor) || Math.sign(aPatch - bPatch);
+            for (let i = 1; i < 4; i++) {
+                const a = parseInt(aVersion[i], 10);
+                const b = parseInt(bVersion[i], 10);
+                if (a != b) {
+                    return Math.sign(b - a);
+                }
+            }
         }
         return 0; // equal
     }
