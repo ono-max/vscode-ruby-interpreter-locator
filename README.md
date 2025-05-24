@@ -26,6 +26,4 @@ I would like to thank the following projects, which served as references during 
 * Create API
 * Write a test for envVariablesLocator
 * Write a test for PathsReducer
-* Write a test for sorting logic
 * Come up with a solution to cache these interpreter information
-* Setup CI
