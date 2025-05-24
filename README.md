@@ -25,7 +25,7 @@ I would like to thank the following projects, which served as references during 
 * [Eskibear/node-jdk-utils](https://github.com/Eskibear/node-jdk-utils)
 
 # TODO
-* Create API
+* Refactor index.ts by introducing a design pattern.
 * Write a test for envVariablesLocator
 * Write a test for PathsReducer
 * Come up with a solution to cache these interpreter information
