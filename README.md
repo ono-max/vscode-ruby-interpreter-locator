@@ -2,11 +2,11 @@
 
 A Node.js library for discovering available Ruby interpreters on your system. The following environment managers are supported:
 
-* asdf
-* chruby
-* Homebrew
-* rbenv
-* rvm
+* [asdf](https://asdf-vm.com/)
+* [chruby](https://github.com/postmodern/chruby)
+* [Homebrew](https://brew.sh/)
+* [rbenv](https://rbenv.org/)
+* [rvm](https://rvm.io/)
 
 # Usage
 
