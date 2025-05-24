@@ -1,5 +1,7 @@
 # vscode-ruby-interpreter-locator
 
+This library is designed for VS Code extension developers. The VS Code API is used in this library.
+
 A Node.js library for discovering available Ruby interpreters on your system. The following environment managers are supported:
 
 * [asdf](https://asdf-vm.com/)
