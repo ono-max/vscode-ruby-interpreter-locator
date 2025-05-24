@@ -10,6 +10,7 @@ import { RubyEnvScriptRunner } from "./rubyEnvScriptRunner";
 import { RvmLocator } from "./locator/rvmLocator";
 import { RubyInterpreterSorter } from "./rubyInterpreterSorter";
 import { getActiveWorkspaceFolder } from "./vscodeApis";
+import { CacheManager } from "./cacheManager";
 
 export interface RubyInterpreterOptions {
     cwd?: string;
@@ -19,6 +20,14 @@ export interface RubyInterpreterOptions {
 export { RubyInterpreterInfo };
 
 export async function getInterpreters(options?: RubyInterpreterOptions): Promise<RubyInterpreterInfo[]> {
+    let cacheManager: CacheManager<RubyInterpreterInfo[]> | undefined;
+    if (options?.globalState) {
+        cacheManager = new CacheManager(options?.globalState);
+        const cachedInterpreters = cacheManager.getCache();
+        if (cachedInterpreters && cachedInterpreters.length > 0) {
+            return cachedInterpreters;
+        }
+    }
     const locators: Promise<RubyInterpreterInfo[]>[] = [
         // alphabetical order
         new AsdfLocator().execute(),
@@ -36,7 +45,13 @@ export async function getInterpreters(options?: RubyInterpreterOptions): Promise
     const cwd = getCwd(options?.cwd);
     if (cwd !== undefined) {
         const sorter = new RubyInterpreterSorter(runner, cwd).execute();
+        if (cacheManager) {
+            cacheManager.setCache(sorter);
+        }
         return sorter;
+    }
+    if (cacheManager) {
+        cacheManager.setCache(runner);
     }
     return runner;
 }
