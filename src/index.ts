@@ -9,9 +9,12 @@ import { ChrubyLocator } from "./locator/chrubyLocator";
 import { RubyEnvScriptRunner } from "./rubyEnvScriptRunner";
 import { RvmLocator } from "./locator/rvmLocator";
 import { RubyInterpreterSorter } from "./rubyInterpreterSorter";
+import { Memento, workspace } from "vscode";
+import { getActiveWorkspaceFolder } from "./vscodeApis";
 
 export interface RubyInterpreterOptions {
     cwd?: string;
+    globalState?: Memento & { setKeysForSync(keys: readonly string[]): void };
 }
 
 export { RubyInterpreterInfo };
@@ -31,9 +34,20 @@ export async function getInterpreters(options?: RubyInterpreterOptions): Promise
     }
     const reducer = new PathsReducer(locators).execute();
     const runner = new RubyEnvScriptRunner(reducer).execute();
-    if (options?.cwd) {
-        const sorter = new RubyInterpreterSorter(runner, options.cwd).execute();
+    const cwd = getCwd(options?.cwd);
+    if (cwd !== undefined) {
+        const sorter = new RubyInterpreterSorter(runner, cwd).execute();
         return sorter;
     }
     return runner;
+}
+
+function getCwd(cwd?: string): string | undefined {
+    if (cwd && cwd.length > 0) {
+        return cwd;
+    }
+    const folder = getActiveWorkspaceFolder();
+    if (folder) {
+        return folder.uri.fsPath;
+    }
 }
