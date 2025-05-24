@@ -1,6 +1,6 @@
 import path from "path";
 import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, findRubyBinaries, getRbenvDir } from "./utils";
-import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "../types";
 
 export class EnvVariablesLocator implements Locator {
     kind: Kind;

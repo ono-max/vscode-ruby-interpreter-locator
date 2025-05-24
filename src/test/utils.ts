@@ -1,4 +1,4 @@
-import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "../types";
 
 export function getRubyInterpreterInfo(custom: Partial<RubyInterpreterInfo>): RubyInterpreterInfo {
     return {

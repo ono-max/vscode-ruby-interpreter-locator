@@ -1,5 +1,5 @@
 import path from "path";
-import { RubyInterpreterInfo } from "./rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "./types";
 
 export class PathsReducer {
     private rubyInterpreterInfoPromises: Promise<RubyInterpreterInfo[]>[];

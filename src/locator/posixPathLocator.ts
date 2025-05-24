@@ -1,4 +1,4 @@
-import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "../types";
 import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, findRubyBinaries } from "./utils";
 
 // The following paths are borrowed from microsoft/vscode-python.

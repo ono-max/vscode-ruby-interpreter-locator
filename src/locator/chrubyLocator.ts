@@ -1,6 +1,6 @@
 import path from "path";
 import { Kind, Locator, convToRubyInterpreterInfo, findDir, findFiles, getRbenvDir } from "./utils";
-import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "../types";
 
 export class ChrubyLocator implements Locator {
     kind: Kind;

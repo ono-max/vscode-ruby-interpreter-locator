@@ -2,7 +2,7 @@ import path from "path";
 import os from "os";
 import fs, { ObjectEncodingOptions, PathLike } from "fs";
 import asyncfs from "fs/promises";
-import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "../types";
 
 export const Kind = {
     // alphabetical order

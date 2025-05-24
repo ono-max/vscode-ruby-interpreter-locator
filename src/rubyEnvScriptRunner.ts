@@ -1,4 +1,4 @@
-import { RubyInterpreterInfo } from "./rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "./types";
 import { promisify } from "util";
 import { exec } from "child_process";
 import { join } from "path";

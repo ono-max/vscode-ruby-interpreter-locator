@@ -1,4 +1,4 @@
-import { RubyInterpreterInfo } from "./rubyInterpreterInfo";
+import { RubyInterpreterInfo, GlobalState } from "./types";
 import { AsdfLocator } from "./locator/asdfLocator";
 import { EnvVariablesLocator } from "./locator/envVariablesLocator";
 import { HomebrewLocator } from "./locator/homebrewLocator";
@@ -9,12 +9,11 @@ import { ChrubyLocator } from "./locator/chrubyLocator";
 import { RubyEnvScriptRunner } from "./rubyEnvScriptRunner";
 import { RvmLocator } from "./locator/rvmLocator";
 import { RubyInterpreterSorter } from "./rubyInterpreterSorter";
-import { Memento, workspace } from "vscode";
 import { getActiveWorkspaceFolder } from "./vscodeApis";
 
 export interface RubyInterpreterOptions {
     cwd?: string;
-    globalState?: Memento & { setKeysForSync(keys: readonly string[]): void };
+    globalState?: GlobalState;
 }
 
 export { RubyInterpreterInfo };

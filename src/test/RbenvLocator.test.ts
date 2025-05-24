@@ -1,7 +1,7 @@
 import path from "path";
 import { RbenvLocator } from "../locator/rbenvLocator";
 import { Kind, PathInfo } from "../locator/utils";
-import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "../types";
 import { getRubyInterpreterInfo } from "./utils";
 
 let rbenvRoot: string | undefined;

@@ -1,5 +1,5 @@
 import path from "path";
-import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "../types";
 import { RvmLocator } from "../locator/rvmLocator";
 import { ChrubyLocator } from "../locator/chrubyLocator";
 import { getRubyInterpreterInfo } from "./utils";

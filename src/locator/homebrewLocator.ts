@@ -2,7 +2,7 @@ import path from "path";
 import asyncfs from "fs/promises";
 import fs from "fs";
 import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, findFiles } from "./utils";
-import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "../types";
 
 const rubyRegexp = /^ruby(@\d)?(\.\d)?(\.\d)?$/;
 

@@ -1,5 +1,5 @@
 import { promisify } from "util";
-import { RubyInterpreterInfo } from "./rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "./types";
 import { exec } from "child_process";
 import { join } from "path";
 import { readFile } from "fs/promises";

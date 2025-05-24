@@ -1,5 +1,5 @@
 import * as runner from "../rubyEnvScriptRunner";
-import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "../types";
 import * as path from "path";
 
 describe("RubyEnvScriptRunner", () => {

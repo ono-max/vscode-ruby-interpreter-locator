@@ -1,7 +1,7 @@
 import path from "path";
 import os from "os";
 import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, findDir, findFiles } from "./utils";
-import { RubyInterpreterInfo } from "../rubyInterpreterInfo";
+import { RubyInterpreterInfo } from "../types";
 
 export class AsdfLocator implements Locator {
     kind: Kind;
