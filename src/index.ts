@@ -22,7 +22,7 @@ export { RubyInterpreterInfo };
 export async function getInterpreters(options?: RubyInterpreterOptions): Promise<RubyInterpreterInfo[]> {
     let cacheManager: CacheManager<RubyInterpreterInfo[]> | undefined;
     if (options?.globalState) {
-        cacheManager = new CacheManager(options?.globalState);
+        cacheManager = new CacheManager(options.globalState);
         const cachedInterpreters = cacheManager.getCache();
         if (cachedInterpreters && cachedInterpreters.length > 0) {
             return cachedInterpreters;
