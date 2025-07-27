@@ -21,7 +21,7 @@ export class RubyEnvScriptRunner {
         const rubyInterpreterInfos = await this.rubyInterpreterInfoPromises;
         return Promise.all(
             rubyInterpreterInfos.map(async (currentInfo) => {
-                const result = await asyncExec(`${currentInfo.path} ${join(__dirname, "ruby_env.rb")}`);
+                const result = await asyncExec(`${currentInfo.path} ${join(__dirname, "..", "src", "ruby_env.rb")}`);
                 try {
                     const json: RubyEnvJson = JSON.parse(result.stdout);
                     currentInfo.version = json.version;
