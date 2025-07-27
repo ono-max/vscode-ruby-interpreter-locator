@@ -8,8 +8,12 @@
         "compile": "tsc -p ./",
         "pretest": "npm run compile",
         "test": "jest",
+        "lint:eslint": "eslint src --ext ts",
         "lint:prettier": "prettier --check .",
-        "format:prettier": "npm run lint:prettier -- --write"
+        "lint": "npm run lint:eslint && npm run lint:prettier",
+        "format:eslint": "npm run lint:eslint -- --fix",
+        "format:prettier": "npm run lint:prettier -- --write",
+        "format": "npm run format:eslint && npm run format:prettier"
     },
     "author": "Naoto Ono",
     "license": "MIT",
@@ -17,9 +21,12 @@
         "@types/jest": "^29.5.7",
         "@types/node": "^20.8.10",
         "@types/vscode": "^1.100.0",
+        "eslint": "^9.32.0",
+        "eslint-config-prettier": "^10.1.8",
         "jest": "^29.7.0",
         "prettier": "^3.5.3",
         "ts-jest": "^29.1.1",
-        "typescript": "^5.2.2"
+        "typescript": "^5.2.2",
+        "typescript-eslint": "^8.38.0"
     }
 }

@@ -59,7 +59,7 @@ async function safeReadDir(
 ) {
     try {
         return await asyncfs.readdir(dir, options);
-    } catch (e) {
+    } catch {
         return [];
     }
 }

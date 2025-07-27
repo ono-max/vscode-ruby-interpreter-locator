@@ -1,6 +1,5 @@
 import * as runner from "../rubyEnvScriptRunner";
 import { RubyInterpreterInfo } from "../types";
-import * as path from "path";
 
 describe("RubyEnvScriptRunner", () => {
     it("should return correct Ruby version and gemHome from asyncExec output", async () => {

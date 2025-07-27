@@ -1,6 +1,5 @@
 import path from "path";
 import { RubyInterpreterInfo } from "../types";
-import { RvmLocator } from "../locator/rvmLocator";
 import { ChrubyLocator } from "../locator/chrubyLocator";
 import { getRubyInterpreterInfo } from "./utils";
 
@@ -20,7 +19,7 @@ afterAll(() => {
 
 test("chruby", async () => {
     // Mock getRootDir to always return testData
-    jest.spyOn(ChrubyLocator.prototype as any, "getRootDir").mockReturnValue([testData]);
+    jest.spyOn(ChrubyLocator.prototype, "getRootDir").mockReturnValue([testData]);
 
     const locator = new ChrubyLocator();
     const pathInfos = await locator.execute();

@@ -1,5 +1,5 @@
 import path from "path";
-import { Kind, Locator, convToRubyInterpreterInfo, findDir, findFiles, getRbenvDir } from "./utils";
+import { Kind, Locator, convToRubyInterpreterInfo, findDir, findFiles } from "./utils";
 import { RubyInterpreterInfo } from "../types";
 
 export class RvmLocator implements Locator {

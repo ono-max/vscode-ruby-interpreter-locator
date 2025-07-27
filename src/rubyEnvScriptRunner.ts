@@ -6,10 +6,10 @@ import { join } from "path";
 // This function is exported for testing purposes.
 export const asyncExec = promisify(exec);
 
-type RubyEnvJson = {
+interface RubyEnvJson {
     version: string;
     gemHome: string[];
-};
+}
 
 export class RubyEnvScriptRunner {
     private rubyInterpreterInfoPromises: Promise<RubyInterpreterInfo[]>;
@@ -28,9 +28,8 @@ export class RubyEnvScriptRunner {
                     currentInfo.gemHome = json.gemHome;
                 } catch (e) {
                     console.error("Error parsing JSON:", e);
-                } finally {
-                    return currentInfo;
                 }
+                return currentInfo;
             }),
         );
     }

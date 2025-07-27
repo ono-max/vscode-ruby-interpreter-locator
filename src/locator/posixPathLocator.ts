@@ -1,5 +1,5 @@
 import { RubyInterpreterInfo } from "../types";
-import { Kind, Locator, PathInfo, convToRubyInterpreterInfo, findRubyBinaries } from "./utils";
+import { Kind, Locator, convToRubyInterpreterInfo, findRubyBinaries } from "./utils";
 
 // The following paths are borrowed from microsoft/vscode-python.
 // https://github.com/microsoft/vscode-python/blob/v2023.20.0/src/client/pythonEnvironments/common/posixUtils.ts#L40-L68

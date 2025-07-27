@@ -1,7 +1,6 @@
 import path from "path";
 import { RubyInterpreterInfo } from "../types";
 import { RvmLocator } from "../locator/rvmLocator";
-import { get } from "http";
 import { getRubyInterpreterInfo } from "./utils";
 
 let homedir: string | undefined;

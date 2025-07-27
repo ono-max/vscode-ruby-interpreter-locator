@@ -59,8 +59,8 @@ export class RubyInterpreterSorter {
         if (a.version === undefined && b.version === undefined) {
             return 0; // equal
         }
-        const aVersion = versionRegexp.exec(a.version!);
-        const bVersion = versionRegexp.exec(b.version!);
+        const aVersion = versionRegexp.exec(a.version || "");
+        const bVersion = versionRegexp.exec(b.version || "");
         if (aVersion && aVersion.length === 4 && bVersion && bVersion.length === 4) {
             for (let i = 1; i < 4; i++) {
                 const a = parseInt(aVersion[i], 10);
@@ -99,7 +99,7 @@ export class RubyInterpreterSorter {
         try {
             const version = await readFile(rubyVersionFile, "utf8");
             return version.trim();
-        } catch (error) {
+        } catch {
             return null;
         }
     }

@@ -1,5 +1,4 @@
 import path from "path";
-import { Kind, PathInfo } from "../locator/utils";
 import { HomebrewLocator } from "../locator/homebrewLocator";
 import { RubyInterpreterInfo } from "../types";
 import { getRubyInterpreterInfo } from "./utils";

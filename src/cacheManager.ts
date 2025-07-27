@@ -1,4 +1,4 @@
-import { GlobalState, RubyInterpreterInfo } from "./types";
+import { GlobalState } from "./types";
 
 const key = "VSCODE_RUBY_INTERPRETER_LOCATOR_CACHE";
 
