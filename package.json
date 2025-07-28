@@ -4,6 +4,9 @@
     "description": "",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
+    "files": [
+        "lib"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/ono-max/vscode-ruby-interpreter-locator.git"
