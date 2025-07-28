@@ -10,6 +10,8 @@ jobs:
       contents: write
       pull-requests: write
       issues: write
+    outputs:
+      tag: ${{ steps.run-tagpr.outputs.tag }}
     steps:
     - uses: actions/checkout@v4
       with:
